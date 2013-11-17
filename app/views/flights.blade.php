@@ -33,12 +33,11 @@
           <li><a href="login">Login</a></li>
         </ul>
         <h3 class="text-muted">JJ Airlines</h3>
-      </div>
 
+      </div>
       <div class="footer">
         <p>&copy; JJ Airlines 2013</p>
       </div>
-
     </div> <!-- /container -->
 
 
