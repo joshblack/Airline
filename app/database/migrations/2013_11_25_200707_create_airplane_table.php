@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 
-class CreateAirlineTable extends Migration {
+class CreateAirplaneTable extends Migration {
 
 	/**
 	 * Run the migrations.
@@ -12,13 +12,12 @@ class CreateAirlineTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('airline', function(Blueprint  $table) {
-			$table->string('airline_code', 3);
-			$table->string('city');
-			$table->string('state');
-			$table->string('name');
+		Schema::create('airplane', function(Blueprint  $table) {
+			$table->string('airplane_id');
+			$table->string('plane_type');
+			$table->integer('numOfSeats');
 
-			$table->primary('airline_code');
+			$table->primary('airplane_id');
 			// etc...
 		});
 	}
@@ -30,7 +29,7 @@ class CreateAirlineTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::drop('airline');
+		Schema::drop('airplane');
 	}
 
 }
