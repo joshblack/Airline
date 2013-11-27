@@ -26,6 +26,7 @@ return array(
     'CreatePaymentTable' => $baseDir . '/app/database/migrations/2013_11_25_234338_create_payment_table.php',
     'CreateReservationTable' => $baseDir . '/app/database/migrations/2013_11_25_223608_create_reservation_table.php',
     'CreateTripTable' => $baseDir . '/app/database/migrations/2013_11_25_225345_create_trip_table.php',
+    'CreateUsersTable' => $baseDir . '/app/database/migrations/2013_11_26_031152_create_users_table.php',
     'DatabaseSeeder' => $baseDir . '/app/database/seeds/DatabaseSeeder.php',
     'Doctrine\\Common\\Annotations\\Annotation' => $vendorDir . '/doctrine/annotations/lib/Doctrine/Common/Annotations/Annotation.php',
     'Doctrine\\Common\\Annotations\\AnnotationException' => $vendorDir . '/doctrine/annotations/lib/Doctrine/Common/Annotations/AnnotationException.php',

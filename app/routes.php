@@ -20,5 +20,13 @@ Route::get('signup', function() {
 	return View::make('signup');
 });
 
-Route::get('login', 'AuthController@getLogin');
-Route::get('flights', 'FlightController@index');
+Route::get('login', function() {
+	return View::make('login');
+});
+
+Route::post('login', 'AuthController@login');
+
+Route::get('flights', 'HomeController@bookFlight');
+Route::post('flights', 'FlightController@filterFlights');
+
+Route::get('flights/available', 'FlightController@');

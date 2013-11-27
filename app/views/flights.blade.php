@@ -35,7 +35,30 @@
         <h3 class="text-muted">JJ Airlines</h3>
 
       </div>
-      <div class="footer">
+
+      <form role="form" action="flights" method="post">
+        <div class="form-group">
+          <label for="date">Date</label>
+          <input type="datetime-local" name="flight-date" class="form-control" id="date" placeholder="Select a Date" required>
+        </div>
+        <div class="form-group">
+          <label for="Departure">Departure</label>
+          <input type="text" class="form-control" name="departure" id="Departure" placeholder="Atlanta" required>
+        </div>
+        <div class="form-group">
+          <label for="Destination">Destination</label>
+          <input type="text" class="form-control" name="destination" id="Destination" placeholder="Gainesville" required>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" name="flexible-date" value="true">
+            Select for flexible dates
+          </label>
+        </div>
+        <button type="submit" class="btn btn-success">Look for flights</button>
+      </form>
+
+      <div class="footer" style="margin-top: 25px">
         <p>&copy; JJ Airlines 2013</p>
       </div>
     </div> <!-- /container -->

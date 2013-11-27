@@ -1,6 +1,6 @@
 <?php
 
-class FlightController extends \BaseController {
+class FlightController extends BaseController {
 
 	/**
 	 * Display a listing of the resource.
@@ -74,6 +74,15 @@ class FlightController extends \BaseController {
 	public function destroy($id)
 	{
 		//
+	}
+
+	public function filterFlights() {
+		$flightDate = Input::get('flight-date');
+		$flexibleDate = Input::get('flexible-date'); // if it exists, has value of string(4) "true"
+		$departure = Input::get('departure');
+		$destination = Input::get('destination');
+
+		dd($destination);
 	}
 
 }
