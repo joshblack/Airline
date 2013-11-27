@@ -7,31 +7,31 @@ class AirlineTableSeeder extends Seeder {
 
 		$airlines = array(
 			[
-				'airline_code' 	=> '111',
+				'airline_code' 	=> 'CCC',
 				'city' 			=> 'gainesville',
 				'state' 		=> 'florida',
 				'name' 			=> 'GNV Regional Airport'
 			],
 			[
-				'airline_code'	=> '222',
+				'airline_code'	=> 'EEE',
 				'city'			=> 'atlanta',
 				'state'			=> 'georgia',
 				'name'			=> 'atl regional airport'
 			],
 			[
-				'airline_code'	=> '333',
+				'airline_code'	=> 'AAA',
 				'city'			=> 'denver',
 				'state'			=> 'colorado',
 				'name'			=> 'dnv regional airport'
 			],
 			[
-				'airline_code'	=> '444',
+				'airline_code'	=> 'DDD',
 				'city'			=> 'san francisco',
 				'state'			=> 'california',
 				'name'			=> 'SF airport'
 			],
 			[
-				'airline_code'	=> '555',
+				'airline_code'	=> 'BBB',
 				'city' 			=> 'new york city',
 				'state'			=> 'new york',
 				'name'			=> 'ny airport'

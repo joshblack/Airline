@@ -14,10 +14,10 @@ class DatabaseSeeder extends Seeder {
 		$this->call('UserTableSeeder');
 		$this->call('AirlineTableSeeder');
 		$this->call('AirplaneTableSeeder');
-		// $this->call('FlightLegTableSeeder');
-		// $this->call('PaymentTableSeeder');
+		$this->call('FlightLegTableSeeder');
+		$this->call('PaymentTableSeeder');
 		$this->call('ReservationTableSeeder');
-		// $this->call('TripTableSeeder');
+		$this->call('TripTableSeeder');
 	}
 
 }
