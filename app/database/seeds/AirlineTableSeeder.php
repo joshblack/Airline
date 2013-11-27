@@ -1,18 +1,43 @@
 <?php
 
-class AdminTableSeeder extends Seeder {
+class AirlineTableSeeder extends Seeder {
 
 	public function run() {
 		DB::table('airline')->delete();
 
-		$airline = array(
-			['airline_id' => 'whatever',
-			'attribute_name' => 'tuple value at attribute',
-
+		$airlines = array(
+			[
+				'airline_code' 	=> '111',
+				'city' 			=> 'gainesville',
+				'state' 		=> 'florida',
+				'name' 			=> 'GNV Regional Airport'
+			],
+			[
+				'airline_code'	=> '222',
+				'city'			=> 'atlanta',
+				'state'			=> 'georgia',
+				'name'			=> 'atl regional airport'
+			],
+			[
+				'airline_code'	=> '333',
+				'city'			=> 'denver',
+				'state'			=> 'colorado',
+				'name'			=> 'dnv regional airport'
+			],
+			[
+				'airline_code'	=> '444',
+				'city'			=> 'san francisco',
+				'state'			=> 'california',
+				'name'			=> 'SF airport'
+			],
+			[
+				'airline_code'	=> '555',
+				'city' 			=> 'new york city',
+				'state'			=> 'new york',
+				'name'			=> 'ny airport'
 			]
-			// more stuff
-			);
+		);
 
-		DB::table('airline')->insert($airline);
+		DB::table('airline')->insert($airlines);
 	}
 }
