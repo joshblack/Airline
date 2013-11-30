@@ -26,44 +26,13 @@
   <body>
 
     <div class="container">
-      <div class="header">
-        <ul class="nav nav-pills pull-right">
-          <li><a href="/">Home</a></li>
-          <li class="active"><a href="flights">Book a Flight</a></li>
-          <li><a href="login">Login</a></li>
-        </ul>
-        <h3 class="text-muted">JJ Airlines</h3>
 
-      </div>
+      @yield('content')
 
-    <table class="table table-striped table-bordered table-hover">
- 		<thead>
- 			<tr>
- 				<th>Date</th>
- 				<th>Departure</th>
- 				<th>Destination</th>
- 				<th>Price</th>
- 				<th>Seats Available</th>
- 				<th>Book Now</th>
- 			</tr>
- 		</thead>
- 		<tbody>
- 			<?php foreach($filterFlights as $flight): ?>
- 				<tr>
- 					<td>{{ $flight->date }}</td>
- 					<td>{{ $flight->departure }}</td>
- 					<td>{{ $flight->destination }}</td>
- 					<td>{{ $flight->price }}</td>
- 					<td>{{ $flight->seatsAvail }}</td>
- 					<td><a href="">Book Now</a></td>
- 				</tr>
- 			<?php endforeach; ?>
- 		</tbody>
-	</table>
-
-      <div class="footer" style="margin-top: 25px">
+      <div class="footer">
         <p>&copy; JJ Airlines 2013</p>
       </div>
+
     </div> <!-- /container -->
 
 

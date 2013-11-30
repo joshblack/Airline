@@ -71,6 +71,11 @@
 
     <div class="container">
 
+    @if ($message = Session::get('error'))
+      <h4>Error</h4>
+      {{ $message }}  
+    @endif
+
       <form class="form-signin" action="login" method="post">
         <h2 class="form-signin-heading">Please sign in</h2>
         <input type="text" class="form-control" name="username" placeholder="Username" required autofocus>

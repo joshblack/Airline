@@ -81,25 +81,34 @@ class FlightController extends BaseController {
 		$departure 		= Input::get('departure');
 		$destination 	= Input::get('destination');
 
-		// need to look up departure code and arrival code first, where are they?
+		// Find the codes of the airports we are departing from and going to
 		$depCode = DB::table('airline')->where('city', '=', $departure)->pluck('airline_code');
 		$arrCode = DB::table('airline')->where('city', '=', $destination)->pluck('airline_code');
-
-		// this is the query for if flexibleDate is NOT set
-		// SIDENOTE: if flexibe-date was checked, has value of string(4) "true"
-		if (!Input::get('flexible-date')) {					
-			$filterFlights = DB::table('flightleg')
-				->where('flightLegDate', '=', $flightDate) // possible issue, dates might not be formatted the same
-				->where('departureCode', '=', $depCode)
-				->where('arrivalCode', '=', $arrCode)
-				->get();
-
+ 
+		// If flexible date is not checked
+		if (Input::get('flexible-date') == NULL) {					
+		
 			return View::make('flights.index', array(
 				'flights'	=> $filterFlights
 				));
 		}
-		else {
+		else { 
+
 			// have to figure out what the possible dates are
+			$twoDaysBefore;
+			$previousDay;
+			$flightDate;
+			$nextDay;
+			$twoDaysAfter;
+
+			return View::make('flights.index', array(
+				'twoDaysBefore'	=> $twoDaysBefore,
+				'previousDay'	=> $previousDay,
+				'flightDate' 	=> $flightDate,
+				'nextDay'		=> $nextDay,
+				'twoDaysAfter'	=> $twoDaysAfter
+				));
+
 		}
 	}
 

@@ -11,21 +11,24 @@ class UserTableSeeder extends Seeder {
 				'firstname'	=> 'admin',
 				'lastname'	=> 'admin',
 				'username'	=> 'admin',
-				'password'	=> Hash::make('password')
+				'password'	=> Hash::make('password'),
+				'role'		=> 'admin'
 			],
 			[
 				'id'		=> 2,
 				'firstname'	=> 'josh',
 				'lastname'	=> 'black',
 				'username'	=> 'joshblack',
-				'password'	=> Hash::make('justinisdoge')
+				'password'	=> Hash::make('justinisdoge'),
+				'role'		=> 'client'
 			],
 			[
 				'id'		=> 3,
 				'firstname'	=> 'justin',
 				'lastname'	=> 'rafanan',
 				'username'	=> 'jrafanan',
-				'password'	=> Hash::make('iamdoge')
+				'password'	=> Hash::make('iamdoge'),
+				'role'		=> 'agent'
 			]
 
 

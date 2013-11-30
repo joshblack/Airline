@@ -19,12 +19,22 @@ Route::get('/', function()
 Route::get('signup', function() {
 	return View::make('signup');
 });
+Route::post('signup', 'AuthController@signup');
 
 Route::get('login', function() {
 	return View::make('login');
 });
 
 Route::post('login', 'AuthController@login');
+
+Route::get('logout', function() {
+	Auth::logout();
+	return Redirect::to('/');
+});
+
+Route::get('profile', function() {
+	return View::make('profile');
+});
 
 Route::get('flights', 'HomeController@bookFlight');
 Route::post('flights', 'FlightController@filterFlights');
