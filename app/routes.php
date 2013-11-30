@@ -32,11 +32,13 @@ Route::get('logout', function() {
 	return Redirect::to('/');
 });
 
-Route::get('profile', function() {
-	return View::make('profile');
+Route::group(array('before' => 'auth'), function()
+{
+
+	Route::get('profile', function() {
+		return View::make('profile');
+	});
+
+	Route::get('flights', 'HomeController@bookFlight');
+	Route::post('flights', 'FlightController@filterFlights');
 });
-
-Route::get('flights', 'HomeController@bookFlight');
-Route::post('flights', 'FlightController@filterFlights');
-
-Route::get('flights/available', 'FlightController@');
