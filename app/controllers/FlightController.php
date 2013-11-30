@@ -81,35 +81,98 @@ class FlightController extends BaseController {
 		$departure 		= Input::get('departure');
 		$destination 	= Input::get('destination');
 
+		$formatFlightDate = new Datetime($flightDate);
+		$formatFlightDate->format("g:i A M j, Y ");
+
 		// Find the codes of the airports we are departing from and going to
 		$depCode = DB::table('airline')->where('city', '=', $departure)->pluck('airline_code');
 		$arrCode = DB::table('airline')->where('city', '=', $destination)->pluck('airline_code');
  
 		// If flexible date is not checked
-		if (Input::get('flexible-date') == NULL) {					
-		
+		if (Input::get('flexible-date') == NULL) {	
+
+			$tripNumber = DB::table('trip')
+				->where('departure', '=', $departure)
+				->where('destination', '=', $destination)
+				->pluck('tripNum');
+
+			$flightLegTime = DB::table('flightleg')
+				->where('tripNum', '=', $tripNumber)
+				->where('departureCode', '=', $depCode)
+				->pluck('departureTime');
+
+			$formatFlightLegTime = new Datetime($flightLegTime);
+			$formatFlightLegTime->format("g:i A M j, Y ");
+
+			if ($formatFlightLegTime != $formatFlightDate) {
+				$tripInfo = 1;
+			}
+			else {
+				$tripInfo = DB::table('trip')
+					->where('departure', '=', $departure)
+					->where('destination', '=', $destination)
+					->get();
+			}
+
+			// tell me how do we get a flight given above information.
 			return View::make('flights.index', array(
-				'flights'	=> $filterFlights
+				'tripInfo'	=> $tripInfo,
+				'flightDate' => $formatFlightLegTime
 				));
 		}
 		else { 
 
-			// have to figure out what the possible dates are
-			$twoDaysBefore;
-			$previousDay;
-			$flightDate;
-			$nextDay;
-			$twoDaysAfter;
+			// RANGE
+			$tripNumber = DB::table('trip')
+				->where('departure', '=', $departure)
+				->where('destination', '=', $destination)
+				->lists('tripNum');
+
+			$flightArray = array();
+
+			foreach ($tripNumber as $trip) {
+
+				$flightLegTime = DB::table('flightleg')
+					->where('tripNum', '=', $trip)
+					->where('departureCode', '=', $depCode)
+					->pluck('departureTime');
+
+					array_push($flightArray, $flightLegTime);
+			}
+			
+			$flexibleDepTimeBefore = $formatFlightDate->sub(new DateInterval('P2D'));
+			$flexibleDepTimeAfter = $formatFlightDate->add(new DateInterval('P2D'));
+
+			$tripArray = array();
+
+			foreach ($flightArray as $flight) {
+				$formatFlight = new Datetime($flight);
+				$formatFlight->format("g:i A M j, Y ");
+
+				if ($formatFlight > $flexibleDepTimeAfter || $formatFlight < $flexibleDepTimeBefore) {
+					$tripInfo = 2;
+				}
+				else {
+					$tripInfo = DB::table('trip')
+						->where('departure', '=', $departure)
+						->where('destination', '=', $destination)
+						->get();
+
+					$tripInfo['flightTime'] = $flight;
+
+					array_push($tripArray, $tripInfo);
+				}	
+			}
 
 			return View::make('flights.index', array(
-				'twoDaysBefore'	=> $twoDaysBefore,
-				'previousDay'	=> $previousDay,
-				'flightDate' 	=> $flightDate,
-				'nextDay'		=> $nextDay,
-				'twoDaysAfter'	=> $twoDaysAfter
+				'tripInfo'	=> $tripArray
 				));
 
 		}
+	}
+
+	public function makePayment() {
+		
 	}
 
 }

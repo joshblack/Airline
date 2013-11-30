@@ -32,7 +32,7 @@ class AirlineTableSeeder extends Seeder {
 			],
 			[
 				'airline_code'	=> 'BBB',
-				'city' 			=> 'new york city',
+				'city' 			=> 'new york',
 				'state'			=> 'new york',
 				'name'			=> 'ny airport'
 			]
