@@ -19,7 +19,7 @@ class FlightController extends BaseController {
 	 */
 	public function create()
 	{
-		//
+		return View::make('flights.create');
 	}
 
 	/**
@@ -125,11 +125,13 @@ class FlightController extends BaseController {
 		}
 		else { 
 
+			$tripType = 0;
 			// RANGE
 			$tripNumber = DB::table('trip')
 				->where('departure', '=', $departure)
 				->where('destination', '=', $destination)
 				->lists('tripNum');
+
 
 			$flightArray = array();
 
@@ -140,11 +142,14 @@ class FlightController extends BaseController {
 					->where('departureCode', '=', $depCode)
 					->pluck('departureTime');
 
-					array_push($flightArray, $flightLegTime);
+				array_push($flightArray, $flightLegTime);
 			}
 			
-			$flexibleDepTimeBefore = $formatFlightDate->sub(new DateInterval('P2D'));
-			$flexibleDepTimeAfter = $formatFlightDate->add(new DateInterval('P2D'));
+			$beforeTime = new Datetime($formatFlightDate->format("g:i A M j, Y "));
+			$beforeTime->sub(new DateInterval('P4D'));
+
+			$afterTime = new Datetime($formatFlightDate->format("g:i A M j, Y "));
+			$afterTime->add(new DateInterval('P4D'));
 
 			$tripArray = array();
 
@@ -152,7 +157,7 @@ class FlightController extends BaseController {
 				$formatFlight = new Datetime($flight);
 				$formatFlight->format("g:i A M j, Y ");
 
-				if ($formatFlight > $flexibleDepTimeAfter || $formatFlight < $flexibleDepTimeBefore) {
+				if ($formatFlight > $afterTime || $formatFlight < $beforeTime) {
 					$tripInfo = 2;
 				}
 				else {
@@ -168,7 +173,8 @@ class FlightController extends BaseController {
 			}
 
 			return View::make('flights.index', array(
-				'tripInfo'	=> $tripArray
+				'tripInfo'	=> $tripArray,
+				'tripType' => $tripType
 				));
 
 		}
@@ -262,7 +268,28 @@ class FlightController extends BaseController {
 
 		DB::table('payment')->insert($payment);
 
-		return Redirect::to('/')->with('success', 'Your flight has been booked!');
+		// decreasing amount of seats on each leg
+
+		$numSeats = DB::table('flightleg')
+			->where('tripNum', '=', $input['tripNum'])
+			->get();
+
+		$error = NULL;
+
+		foreach ($numSeats as $numSeat) {
+			if($numSeat->numSeatsAvail - 1 < 0)
+				$error = 0;
+			else {
+				DB::table('flightleg')
+					->where('tripNum', $numSeat->tripNum)
+					->update(array('numSeatsAvail' => $numSeat->numSeatsAvail - 1));
+			}
+		}
+		
+		if ($error = NULL)
+			return Redirect::to('/')->with('success', 'Your flight has been booked!');
+		else 
+			return Redirect::to('/')->with('error', 'Flight is full, sorry!');
 	}
 
 }

@@ -40,9 +40,14 @@ Route::group(array('before' => 'auth'), function()
 	});
 
 	Route::get('flights', 'HomeController@bookFlight');
+	Route::get('flights/new', 'FlightController@create');
 	Route::post('flights', 'FlightController@filterFlights');
 	Route::get('reservation/{departure}/{destination}/{time}', 'FlightController@showReservation');
 	Route::post('reservation', 'FlightController@makeReservation');
 	// Route::get('payment', 'FlightController@makePayment');
 	Route::post('payment', 'FlightController@makePayment');
+
+	
+	Route::get('agents/flights', 'AgentController@showIndex');
+	
 });

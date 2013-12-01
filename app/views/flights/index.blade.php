@@ -56,7 +56,7 @@
         <td><?php echo $trip[0]->departure; ?></td>
         <td>{{ $trip[0]->destination }}</td>
         <td>${{ $trip[0]->price }}</td>
-        <td><a href="<?php echo 'reservation/' . $trip->departure . '/' . $trip->destination . '/' . $flightDate->format("g:i A M j, Y ") . ''?>"></td>
+        <td><a href="<?php echo 'reservation/' . $trip[0]->departure . '/' . $trip[0]->destination . '/' . $formatFlight->format("g:i A M j, Y ") . ''?>">Book Now</a></td>
       </tr>
     <?php endforeach; ?>
   <?php endif; ?>
