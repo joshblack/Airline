@@ -19,7 +19,7 @@ class CreateReservationTable extends Migration {
 			$table->string('address');
 			$table->string('phone');
 			$table->datetime('reservationDate');
-
+			$table->timestamps();
 			$table->primary('reservationNum');
 			// etc...
 		});

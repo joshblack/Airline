@@ -9,22 +9,22 @@ class AirplaneTableSeeder extends Seeder {
 			[
 				'airplane_id' 	=> '111',
 				'plane_type'	=> '747',
-				'numOfSeats'	=> 30
+				'numOfSeats'	=> 20
 			],
 			[
 				'airplane_id' 	=> '222',
-				'plane_type'	=> '747',
+				'plane_type'	=> '757',
 				'numOfSeats'	=> 30
 			],
 			[
 				'airplane_id' 	=> '333',
-				'plane_type'	=> '747',
-				'numOfSeats'	=> 30
+				'plane_type'	=> '767',
+				'numOfSeats'	=> 40
 			],
 			[
 				'airplane_id' 	=> '444',
-				'plane_type'	=> '747',
-				'numOfSeats'	=> 30
+				'plane_type'	=> '777',
+				'numOfSeats'	=> 50
 			]
 			);
 

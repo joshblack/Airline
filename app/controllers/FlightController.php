@@ -29,7 +29,43 @@ class FlightController extends BaseController {
 	 */
 	public function store()
 	{
-		//
+		$input = Input::get();
+
+		$tripNum = DB::table('trip')->lists('tripNum');
+		$newTripNum = rand(1, 999);
+
+		while (in_array($newTripNum, $tripNum))
+			$newTripNum = rand(1, 999);
+
+		$departure = DB::table('airline')
+			->where('city', '=', $input['departure'])
+			->pluck('airline_code');
+
+		if(!$departure)
+			return Redirect::to('/agents/flights/new')->with('error', 'That departure city does not exist');
+
+		$destination = DB::table('airline')
+			->where('city', '=', $input['destination'])
+			->pluck('airline_code');
+
+		if(!$destination)
+			return Redirect::to('/agents/flights/new')->with('error', 'That destination city does not exist');
+
+		$newTrip = array(
+			'tripNum' => $newTripNum,
+			'airline' => $input['airline'],
+			'price'	=> $input['price'],
+			'departure' => $input['departure'],
+			'destination' => $input['destination'],
+			'numOfLegs' => $input['numOfLegs']
+			);
+
+		DB::table('trip')->insert($newTrip);
+
+		return View::make('flights.flightlegs', array(
+			'numOfLegs' => $input['numOfLegs'],
+			'trip'		=> $newTrip
+			));
 	}
 
 	/**
@@ -49,20 +85,40 @@ class FlightController extends BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function edit($id)
+	public function edit($tripNum)
 	{
-		//
+		$trip = DB::table('trip')
+			->where('tripNum', '=', $tripNum)
+			->get();
+
+		return View::make('flights.edit', array(
+			'trip'	=> $trip
+			));
 	}
 
 	/**
 	 * Update the specified resource in storage.
 	 *
-	 * @param  int  $id
+	 * @param  int  $tripNum
 	 * @return Response
 	 */
-	public function update($id)
+	public function update($tripNum)
 	{
-		//
+		$input = Input::get();
+
+		$newTrip = array(
+			'airline' => $input['airline'],
+			'price'	=>	$input['price'],
+			'departure' => $input['departure'],
+			'destination' => $input['destination'],
+			'numOfLegs'	=> $input['numOfLegs']
+			);
+
+		DB::table('trip')
+            ->where('tripNum', $input['tripNum'])
+            ->update($newTrip);
+
+		return Redirect::to('/agents/flights')->with('success', 'Your trip information has been saved');
 	}
 
 	/**
@@ -71,9 +127,41 @@ class FlightController extends BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
+	public function destroy($tripNum)
 	{
-		//
+		$trip = DB::table('trip')
+			->where('tripNum', '=', $tripNum)
+			->get();
+
+		$flightLegs = DB::table('flightleg')
+			->where('tripNum', '=', $trip[0]->tripNum)
+			->get();
+
+		$destroy = 1;
+
+		foreach ($flightLegs as $flight) {
+			$airplaneId = DB::table('flightleg')
+				->where('tripNum', '=', $flight->tripNum)
+				->where('legNum', '=', $flight->legNum)
+				->pluck('airplaneID');
+
+			$numSeatsTotal = DB::table('airplane')
+				->where('airplane_id', '=', $airplaneId)
+				->pluck('numOfSeats');
+
+			if ($numSeatsTotal != $flight->numSeatsAvail)
+				$destroy = 0;
+		}
+
+		if ($destroy == 1)
+		{	
+			DB::table('trip')->where('tripNum', '=', $tripNum)->delete();
+			return Redirect::to('/agents/flights')->with('success', 'Your trip has been deleted');
+		}
+		else {
+			return Redirect::to('/agents/flights')->with('error', 'People have already booked this flight');
+		}
+		
 	}
 
 	public function filterFlights() {
