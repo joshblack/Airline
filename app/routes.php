@@ -41,5 +41,8 @@ Route::group(array('before' => 'auth'), function()
 
 	Route::get('flights', 'HomeController@bookFlight');
 	Route::post('flights', 'FlightController@filterFlights');
-	Route::get('payment', 'FlightController@makePayment');
+	Route::get('reservation/{departure}/{destination}/{time}', 'FlightController@showReservation');
+	Route::post('reservation', 'FlightController@makeReservation');
+	// Route::get('payment', 'FlightController@makePayment');
+	Route::post('payment', 'FlightController@makePayment');
 });

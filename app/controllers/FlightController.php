@@ -108,6 +108,8 @@ class FlightController extends BaseController {
 				$tripInfo = 1;
 			}
 			else {
+				$tripType = 1;
+
 				$tripInfo = DB::table('trip')
 					->where('departure', '=', $departure)
 					->where('destination', '=', $destination)
@@ -117,7 +119,8 @@ class FlightController extends BaseController {
 			// tell me how do we get a flight given above information.
 			return View::make('flights.index', array(
 				'tripInfo'	=> $tripInfo,
-				'flightDate' => $formatFlightLegTime
+				'flightDate' => $formatFlightLegTime,
+				'tripType'	=> $tripType
 				));
 		}
 		else { 
@@ -171,8 +174,95 @@ class FlightController extends BaseController {
 		}
 	}
 
-	public function makePayment() {
+	public function showReservation($departure, $destination, $time) {
+
+		$depCode = DB::table('airline')->where('city', '=', $departure)->pluck('airline_code');
+
+		$tripNumber = DB::table('trip')
+				->where('departure', '=', $departure)
+				->where('destination', '=', $destination)
+				->lists('tripNum');
+
+		$depTime = new Datetime($time);
+		$depTime->format("g:i A M j, Y ");
+
+
+		foreach ($tripNumber as $trip) {
+
+			$flightLegTime = DB::table('flightleg')
+				->where('tripNum', '=', $trip)
+				->where('departureCode', '=', $depCode)
+				->pluck('departureTime');
+
+			$formatFlightLegTime = new Datetime($flightLegTime);
+			$formatFlightLegTime->format("g:i A M j, Y ");
+
+			if ($formatFlightLegTime == $depTime) {
+				$flightTripNumber = $trip;
+				break;
+			}
+		}
+
+		return View::make('reservation', array(
+				'tripNum' => $flightTripNumber
+			));
 		
+	}
+
+	public function makeReservation() {
+		$input = Input::get();
+
+		$date = date('Y-m-d H:i:s');
+
+		$reservationNum = rand(1, 999);
+
+		$reservationNums = DB::table('reservation')
+			->lists('reservationNum');
+
+		while (in_array($reservationNum, $reservationNums))
+			$reservationNum = rand(1, 999);
+
+		$reservation = array(
+			'reservationNum'	=> $reservationNum,
+			'email'	=> $input['email'],
+			'name' => $input['fullName'],
+			'address' => $input['address'],
+			'phone'	=> $input['phoneNumber'],
+			'reservationDate' => $date
+			);
+
+		DB::table('reservation')->insert($reservation);
+
+		return View::make('payment', array(
+			'reservationNum' => $reservationNum,
+			'tripNum'	=> $input['tripNum']
+			));
+	}
+
+	public function makePayment() {
+		$input = Input::get();
+		$date = date('Y-m-d H:i:s');
+
+		$transactionNum = rand(1, 999);
+
+		$transactionNums = DB::table('payment')
+			->lists('transactionNum');
+
+		while (in_array($transactionNum, $transactionNums))
+			$transactionNum = rand(1, 999);
+
+		$payment = array(
+			'transactionNum' => $transactionNum,
+			'paymentDate' => $date,
+			'account' => $input['account'],
+			'nameOnAccount' => $input['accountName'],
+			'reservationNum' => $input['reservationNum'],
+			'tripNum' => $input['tripNum']
+			);
+
+		DB::table('payment')->insert($payment);
+
+		return Redirect::to('/')->with('success', 'Your flight has been booked!');
 	}
 
 }

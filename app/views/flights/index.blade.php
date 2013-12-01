@@ -31,14 +31,14 @@
 		<th>Price</th>
 		<th>Book Now</th>
 	</tr>
-  <?php if ($tripInfo == 1): ?>
+  <?php if ($tripType == 1): ?>
   	<?php foreach ($tripInfo as $trip): ?>
   	<tr>
   		<td><?php echo $flightDate->format("g:i A M j, Y "); ?></td>
   		<td>{{ $trip->departure }}</td>
   		<td>{{ $trip->destination }}</td>
   		<td>${{ $trip->price }}</td>
-  		<td><a href="#">Book Now</a></td>
+  		<td><a href="<?php echo 'reservation/' . $trip->departure . '/' . $trip->destination . '/' . $flightDate->format("g:i A M j, Y ") . ''?>">Book Now</a></td>
   	</tr>
   	<?php endforeach; ?>
   <?php elseif ($tripInfo == NULL): ?>
@@ -56,7 +56,7 @@
         <td><?php echo $trip[0]->departure; ?></td>
         <td>{{ $trip[0]->destination }}</td>
         <td>${{ $trip[0]->price }}</td>
-        <td><a href="#">Book Now</a></td>
+        <td><a href="<?php echo 'reservation/' . $trip->departure . '/' . $trip->destination . '/' . $flightDate->format("g:i A M j, Y ") . ''?>"></td>
       </tr>
     <?php endforeach; ?>
   <?php endif; ?>

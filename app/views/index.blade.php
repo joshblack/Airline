@@ -22,6 +22,11 @@
   <h3 class="text-muted">JJ Airlines</h3>
 </div>
 
+@if ($message = Session::get('success'))
+  <h4>Success</h4>
+  {{ $message }}  
+@endif
+
 <div class="jumbotron">
   <h1>Welcome!</h1>
   <p class="lead">Looking for a flight to the hottest destination? Maybe a getaway from all the noise?
