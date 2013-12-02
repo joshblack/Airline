@@ -28,7 +28,7 @@ class CreateFlightLegTable extends Migration {
 			$table->foreign('arrivalCode')->references('airline_code')->on('airline');
 			$table->foreign('departureCode')->references('airline_code')->on('airline');
 			$table->foreign('tripNum')->references('tripNum')->on('trip')->onDelete('cascade');
-			// etc...
+			
 		});
 	}
 

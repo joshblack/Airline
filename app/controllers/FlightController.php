@@ -380,4 +380,64 @@ class FlightController extends BaseController {
 			return Redirect::to('/')->with('error', 'Flight is full, sorry!');
 	}
 
+	public function showFlightLegs() {
+
+	}
+
+	public function storeFlightLegs() {
+		$input = Input::get();
+
+		$numOfLegs = DB::table('trip')
+			->where('tripNum', '=', $input['tripNum'])
+			->pluck('numOfLegs');
+
+		$i = 1;
+
+		while ($numOfLegs > 0) {
+
+			$numSeats = DB::table('airplane')
+				->where('airplane_id', '=', $input['airplane' . $i])
+				->pluck('numOfSeats');
+
+			if(!$numSeats)
+				return Redirect::to('agents/flights')->with('error', 'No airplane exists with that ID');
+
+			$departure = new Datetime($input['departure' . $i .'-date']);
+			$destination = new Datetime($input['destination' . $i . '-date']);
+
+			$depCode = DB::table('airline')
+				->where('city', '=', $input['departure' . $i])
+				->pluck('airline_code');
+
+			if(!$depCode)
+				return Redirect::to('agents/flights')->with('error', 'No flight available at that departure location');
+
+			$arrCode = DB::table('airline')
+				->where('city', '=', $input['destination' . $i])
+				->pluck('airline_code');
+
+			if(!$arrCode)
+				return Redirect::to('agents/flights')->with('error', 'No flight available at that destination location');
+
+			$flightLeg = array(
+				'legNum' => $input['flightLeg' . $i],
+				'numSeatsAvail' => $numSeats,
+				'flightLegDate' => $departure,
+				'arrivalTime' => $destination,
+				'departureTime' => $departure,
+				'airplaneID' => $input['airplane' .$i],
+				'arrivalCode' => $arrCode,
+				'departureCode' => $depCode,
+				'tripNum' => $input['tripNum']
+				);
+
+			DB::table('flightLeg')->insert($flightLeg);
+
+			$i++;
+			$numOfLegs--;
+		}
+
+		return Redirect::to('agents/flights')->with('success', 'New Flight information saved');
+	}
+
 }

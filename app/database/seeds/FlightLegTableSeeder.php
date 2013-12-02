@@ -7,7 +7,7 @@ class FlightLegTableSeeder extends Seeder {
 		$flightLegs = array(
 			[
 				'legNum' 	=> 1,
-				'numSeatsAvail'	=> 30,
+				'numSeatsAvail'	=> 20,
 				'flightLegDate'	=> new DateTime('2013-02-02 12:30:00P'),
 				'arrivalTime' => new DateTime('2013-02-02 1:30:00P'),
 				'departureTime' => new DateTime('2013-02-02 12:30:00P') ,
@@ -18,7 +18,7 @@ class FlightLegTableSeeder extends Seeder {
 			],
 			[
 				'legNum' 	=> 2,
-				'numSeatsAvail'	=> 30,
+				'numSeatsAvail'	=> 20,
 				'flightLegDate'	=> new DateTime('2013-02-01 12:30:00P'),
 				'arrivalTime' => new DateTime('2013-02-01 1:30:00P'),
 				'departureTime' => new DateTime('2013-02-01 12:30:00P') ,
@@ -51,7 +51,7 @@ class FlightLegTableSeeder extends Seeder {
 			],
 			[
 				'legNum' 	=> 5,
-				'numSeatsAvail'	=> 30,
+				'numSeatsAvail'	=> 40,
 				'flightLegDate'	=> new DateTime('2013-02-01 12:30:00P'),
 				'arrivalTime' => new DateTime('2013-02-01 1:30:00P'),
 				'departureTime' => new DateTime('2013-02-01 12:30:00P') ,
@@ -62,7 +62,7 @@ class FlightLegTableSeeder extends Seeder {
 			],
 			[
 				'legNum' 	=> 6,
-				'numSeatsAvail'	=> 30,
+				'numSeatsAvail'	=> 20,
 				'flightLegDate'	=> new DateTime('2013-02-01 2:00:00P'),
 				'arrivalTime' => new DateTime('2013-02-01 3:30:00P'),
 				'departureTime' => new DateTime('2013-02-01 2:00:00P') ,
@@ -73,7 +73,7 @@ class FlightLegTableSeeder extends Seeder {
 			],
 			[
 				'legNum' 	=> 7,
-				'numSeatsAvail'	=> 30,
+				'numSeatsAvail'	=> 50,
 				'flightLegDate'	=> new DateTime('2013-02-03 12:30:00P'),
 				'arrivalTime' => new DateTime('2013-02-03 4:30:00P'),
 				'departureTime' => new DateTime('2013-02-03 12:30:00P') ,
@@ -84,7 +84,7 @@ class FlightLegTableSeeder extends Seeder {
 			],
 			[
 				'legNum' 	=> 8,
-				'numSeatsAvail'	=> 30,
+				'numSeatsAvail'	=> 50,
 				'flightLegDate'	=> new DateTime('2013-02-03 6:30:00P'),
 				'arrivalTime' => new DateTime('2013-02-03 8:30:00P'),
 				'departureTime' => new DateTime('2013-02-03 6:30:00P') ,

@@ -11,9 +11,8 @@
         <li><a href="#">My Flights</a></li>
         <li><a href="logout">Logout</a></li>
       @elseif (Auth::user()->role == 'agent')
-        <li><a href="#">My Flights</a></li>
         <li><a href="/agents/flights">Edit Flight Info</a></li>
-        <li><a href="logout">Logout</a></li>
+        <li><a href="/logout">Logout</a></li>
       @endif
     @else
       <li><a href="login">Login</a></li>

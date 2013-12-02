@@ -44,6 +44,8 @@ Route::group(array('before' => 'auth'), function()
 	Route::get('agents/flights/new', 'FlightController@create');
 	Route::post('agents/flights/new', 'FlightController@store');
 
+	Route::post('agents/flights/flightlegs/new', 'FlightController@storeFlightLegs');
+
 	Route::get('agents/flights/{tripNum}/edit', 'FlightController@edit');
 	Route::post('agents/flights/{tripNum}/edit', 'FlightController@update');
 

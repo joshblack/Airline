@@ -11,9 +11,8 @@
         <li><a href="#">My Flights</a></li>
         <li><a href="logout">Logout</a></li>
       @elseif (Auth::user()->role == 'agent')
-        <li><a href="#">My Flights</a></li>
         <li class="active"><a href="#">Edit Flight Info</a></li>
-        <li><a href="logout">Logout</a></li>
+        <li><a href="/logout">Logout</a></li>
       @endif
     @else
       <li><a href="login">Login</a></li>
@@ -31,27 +30,49 @@
 	<?php $flightLegNum = 1; while ($numOfLegs > 0) { ?>
 		<?php if ($numOfLegs == $trip['numOfLegs']) { ?>
 		    <h3 class="form-signin-heading">Enter Flight Leg Number {{ $flightLegNum }} Information</h3>
+			<div class="form-group">
+				<label for="date">Departure Date</label>
+				<input type="datetime-local" name="departure<?php echo $flightLegNum; ?>-date" class="form-control" id="date" placeholder="Departure Date" required>
+			</div>
+			<div class="form-group">
+				<label for="date">Destination Date</label>
+				<input type="datetime-local" name="destination<?php echo $flightLegNum; ?>-date" class="form-control" id="date" placeholder="Destination Date" required>
+			</div>
 		    <input type="text" class="form-control" name="departure<?php echo $flightLegNum; ?>" value="{{ $trip['departure'] }}" readonly>
 		    <input type="text" class="form-control" name="destination<?php echo $flightLegNum; ?>" placeholder="Destination City" required>
 		    <input type="hidden" class="form-control" name="flightLeg<?php echo $flightLegNum; ?>" value="<?php echo $flightLegNum; ?>">
-		<?php } elseif ($numOfLegs == 0) {?>
+		    <input type="text" class="form-contorl" name="airplane<?php echo $flightLegNum; ?>" placeholder="Airplane ID" required>
+		<?php } elseif ($numOfLegs == 1) {?>
 			<h3 class="form-signin-heading">Enter Flight Leg Number {{ $flightLegNum }} Information</h3>
-		    <input type="text" class="form-control" name="departure<?php echo $flightLegNum; ?>" value="" required>
-		    <input type="text" class="form-control" name="price" placeholder="Price" required>
-		    <input type="text" class="form-control" name="departure" placeholder="Departure City" required>
-		    <input type="text" class="form-control" name="destination" placeholder="Destination City" required>
-		    <input type="text" class="form-control" name="numLegs" placeholder="Number of Legs" required>
+			<div class="form-group">
+				<label for="date">Departure Date</label>
+				<input type="datetime-local" name="departure<?php echo $flightLegNum; ?>-date" class="form-control" id="date" placeholder="Departure Date" required>
+			</div>
+			<div class="form-group">
+				<label for="date">Destination Date</label>
+				<input type="datetime-local" name="destination<?php echo $flightLegNum; ?>-date" class="form-control" id="date" placeholder="Destination Date" required>
+			</div>
+		    <input type="text" class="form-control" name="departure<?php echo $flightLegNum; ?>" placeholder="Departure City (Destination of Previous Leg)" required>
+		    <input type="text" class="form-control" name="destination<?php echo $flightLegNum; ?>" value="{{ $trip['destination'] }}" placeholder="{{ $trip['destination'] }}" readonly>
 		    <input type="hidden" class="form-control" name="flightLeg<?php echo $flightLegNum; ?>" value="<?php echo $flightLegNum; ?>">
+		    <input type="text" class="form-contorl" name="airplane<?php echo $flightLegNum; ?>" placeholder="Airplane ID" required>
 		<?php } else { ?>
 			<h3 class="form-signin-heading">Enter Flight Leg Number {{ $flightLegNum }} Information</h3>
-		    <input type="text" class="form-control" name="airline" placeholder="Airline Name" required>
-		    <input type="text" class="form-control" name="price" placeholder="Price" required>
-		    <input type="text" class="form-control" name="departure" placeholder="Departure City" required>
-		    <input type="text" class="form-control" name="destination" placeholder="Destination City" required>
-		    <input type="text" class="form-control" name="numLegs" placeholder="Number of Legs" required>
+			<div class="form-group">
+				<label for="date">Departure Date</label>
+				<input type="datetime-local" name="departure<?php echo $flightLegNum; ?>-date" class="form-control" id="date" placeholder="Departure Date" required>
+			</div>
+			<div class="form-group">
+				<label for="date">Destination Date</label>
+				<input type="datetime-local" name="destination<?php echo $flightLegNum; ?>-date" class="form-control" id="date" placeholder="Destination Date" required>
+			</div>
+		    <input type="text" class="form-control" name="departure<?php echo $flightLegNum; ?>" placeholder="Departure City (Destination of Previous Leg)" required>
+		    <input type="text" class="form-control" name="destination<?php echo $flightLegNum; ?>" placeholder="Destination" required>
 		    <input type="hidden" class="form-control" name="flightLeg<?php echo $flightLegNum; ?>" value="<?php echo $flightLegNum; ?>">
+		    <input type="text" class="form-contorl" name="airplane<?php echo $flightLegNum; ?>" placeholder="Airplane ID" required>
 		<?php } ?>
 	<?php $numOfLegs--; $flightLegNum++; }?>
+	<input type="hidden" name="tripNum" value="{{ $trip['tripNum'] }}">
 	<button class="btn btn-lg btn-primary btn-block" type="submit">Create Flight Legs</button>
 </form>
 
