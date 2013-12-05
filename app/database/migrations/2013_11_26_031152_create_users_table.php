@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration {
 			$table->string('username', 100)->unique();
 			$table->string('password', 64);
 			$table->string('role', 20);
+			$table->integer('tripNum')->nullable()->default(NULL);
 			$table->timestamps();
 		});
 	}

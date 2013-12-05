@@ -77,7 +77,7 @@
  
        <form class="form-signin" action="/reservation" method="POST">
          <h2 class="form-signin-heading">Enter Your Info.</h2>
-         <input type="text" class="form-control" name="fullName" placeholder="Full Name" required autofocus>
+         <input type="text" class="form-control" name="fullName" value="<?php echo Auth::user()->firstname . ' ' . Auth::user()->lastname; ?>" required autofocus>
          <input type="email" class="form-control" name="email" placeholder="Email" required>
          <input type="text" class="form-control" name="address" placeholder="Address" required>
          <input type="text" class="form-control" name="phoneNumber" placeholder="Phone Number" required>

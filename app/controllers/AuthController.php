@@ -33,6 +33,7 @@ class AuthController extends BaseController {
 		$user->username = $username;
 		$user->password = Hash::make($password);
 		$user->role = $role;
+		$user->tripNum = NULL;
 		$user->save();
 
 		return Redirect::to('signup')->with('success', 'Successfully created an account');

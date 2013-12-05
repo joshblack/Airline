@@ -67,7 +67,8 @@ Route::group(array('before' => 'auth'), function()
 	// Route::get('payment', 'FlightController@makePayment');
 	Route::post('payment', 'FlightController@makePayment');
 
-	
 	Route::get('agents/flights', 'AgentController@showIndex');
+
+	Route::get('client/{id}/flights', 'FlightController@showFlights');
 	
 });

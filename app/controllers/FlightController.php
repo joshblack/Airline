@@ -381,7 +381,6 @@ class FlightController extends BaseController {
 		foreach ($numSeats as $numSeat) {
 			if($numSeat->numSeatsAvail - 1 < 0)
 			{
-				dd($numSeat);
 				$error = 0;
 			}
 			else {
@@ -391,8 +390,14 @@ class FlightController extends BaseController {
 			}
 		}
 		
-		if ($error == NULL)
+		if ($error == NULL) {
+			$user = Auth::user()->id;
+			DB::table('users')
+				->where('id', '=', $user)
+				->update(array('tripNum' => $input['tripNum']));
+
 			return Redirect::to('/')->with('success', 'Your flight has been booked!');
+		}
 		else 
 			return Redirect::to('/')->with('error', 'Flight is full, sorry!');
 	}
@@ -451,6 +456,16 @@ class FlightController extends BaseController {
 		}
 
 		return Redirect::to('agents/flights')->with('success', 'New Flight information saved');
+	}
+
+	public function showFlights($id) {
+		$user = DB::table('users')
+			->where('id', '=', $id)
+			->pluck('tripNum');
+
+		$trips = DB::table('trip')
+			->where('tripNum', '=', $user)
+			->get();
 	}
 
 }
