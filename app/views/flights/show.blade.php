@@ -8,7 +8,7 @@
     @if ( Auth::check() )
       @if ( Auth::user()->role == 'client')
         <li><a href="/client/<?php echo Auth::user()->id; ?>/flights">My Flights</a></li>
-        <li><a href="logout">Logout</a></li>
+        <li><a href="/logout">Logout</a></li>
       @elseif (Auth::user()->role == 'agent')
         <li class="active"><a href="/agents/flights">Flight Info</a></li>
         <li><a href="/agents/reservations">Reservations</a></li>

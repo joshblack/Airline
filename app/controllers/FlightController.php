@@ -394,10 +394,10 @@ class FlightController extends BaseController {
 		}
 		
 		if ($error == NULL) {
-			$user = Auth::user()->id;
-			DB::table('users')
-				->where('id', '=', $user)
-				->update(array('tripNum' => $input['tripNum']));
+			//$user = Auth::user()->id;
+			//DB::table('users')
+			//	->where('id', '=', $user)
+			//	->update(array('tripNum' => $input['tripNum']));
 
 			return Redirect::to('/')->with('success', 'Your flight has been booked!');
 		}
