@@ -377,9 +377,13 @@ class FlightController extends BaseController {
 
 		$error = NULL;
 
+
 		foreach ($numSeats as $numSeat) {
 			if($numSeat->numSeatsAvail - 1 < 0)
+			{
+				dd($numSeat);
 				$error = 0;
+			}
 			else {
 				DB::table('flightleg')
 					->where('tripNum', $numSeat->tripNum)
@@ -387,7 +391,7 @@ class FlightController extends BaseController {
 			}
 		}
 		
-		if ($error = NULL)
+		if ($error == NULL)
 			return Redirect::to('/')->with('success', 'Your flight has been booked!');
 		else 
 			return Redirect::to('/')->with('error', 'Flight is full, sorry!');
