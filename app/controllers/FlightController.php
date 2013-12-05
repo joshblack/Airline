@@ -74,9 +74,20 @@ class FlightController extends BaseController {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function show($id)
+	public function show($tripNum)
 	{
-		//
+		$trip = DB::table('trip')
+			->where('tripNum', '=', $tripNum)
+			->get();
+
+		$numSeats = DB::table('flightleg')
+			->where('tripNum', '=', $tripNum)
+			->pluck('numSeatsAvail');
+
+		return View::make('flights.show', array(
+			'trip' => $trip,
+			'numSeats' => $numSeats
+			));
 	}
 
 	/**
@@ -172,6 +183,8 @@ class FlightController extends BaseController {
 		$formatFlightDate = new Datetime($flightDate);
 		$formatFlightDate->format("g:i A M j, Y ");
 
+		$tripType = 0;
+		
 		// Find the codes of the airports we are departing from and going to
 		$depCode = DB::table('airline')->where('city', '=', $departure)->pluck('airline_code');
 		$arrCode = DB::table('airline')->where('city', '=', $destination)->pluck('airline_code');
@@ -378,10 +391,6 @@ class FlightController extends BaseController {
 			return Redirect::to('/')->with('success', 'Your flight has been booked!');
 		else 
 			return Redirect::to('/')->with('error', 'Flight is full, sorry!');
-	}
-
-	public function showFlightLegs() {
-
 	}
 
 	public function storeFlightLegs() {

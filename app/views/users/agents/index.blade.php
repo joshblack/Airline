@@ -10,8 +10,8 @@
         <li><a href="#">My Flights</a></li>
         <li><a href="logout">Logout</a></li>
       @elseif (Auth::user()->role == 'agent')
-        <li class="active"><a href="/agents/flights">Edit Flight Info</a></li>
-        <li><a href="/agents/reservations">Edit Reservations</a></li>
+        <li class="active"><a href="/agents/flights">Flight Info</a></li>
+        <li><a href="/agents/reservations">Reservations</a></li>
         <li><a href="/logout">Logout</a></li>
       @endif
     @else
@@ -42,6 +42,7 @@
     <th>Price</th>
     <th>Number of Legs</th>
     <th>Edit</th>
+    <th>View</th>
   </tr>
   <?php foreach ($trips as $tripInfo): ?>
     <tr>
@@ -52,6 +53,7 @@
       <td>${{ $tripInfo->price }}</td>
       <td>{{ $tripInfo->numOfLegs }}</td>
       <td><a href="flights/<?php echo $tripInfo->tripNum; ?>/edit">Edit Flight</a></td>
+      <td><a href="flights/<?php echo $tripInfo->tripNum; ?>/">View Flight</a></td>
   <?php endforeach; ?>
 
 </table>

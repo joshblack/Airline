@@ -4,13 +4,14 @@
 
 <div class="header">
   <ul class="nav nav-pills pull-right">
-    <li><a href="flights">Book a Flight</a></li>
+    <li><a href="/flights">Book a Flight</a></li>
     @if ( Auth::check() )
       @if ( Auth::user()->role == 'client')
         <li><a href="#">My Flights</a></li>
         <li><a href="logout">Logout</a></li>
       @elseif (Auth::user()->role == 'agent')
-        <li class="active"><a href="#">Edit Flight Info</a></li>
+        <li class="active"><a href="/agents/flights">Flight Info</a></li>
+        <li><a href="/agents/reservations">Reservations</a></li>
         <li><a href="/logout">Logout</a></li>
       @endif
     @else
