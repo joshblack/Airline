@@ -12,8 +12,7 @@ class UserTableSeeder extends Seeder {
 				'lastname'	=> 'admin',
 				'username'	=> 'admin',
 				'password'	=> Hash::make('password'),
-				'role'		=> 'admin',
-				'tripNum'	=> NULL
+				'role'		=> 'admin'
 			],
 			[
 				'id'		=> 2,
@@ -21,8 +20,7 @@ class UserTableSeeder extends Seeder {
 				'lastname'	=> 'black',
 				'username'	=> 'joshblack',
 				'password'	=> Hash::make('justinisdoge'),
-				'role'		=> 'client',
-				'tripNum'	=> 2
+				'role'		=> 'client'
 			],
 			[
 				'id'		=> 3,
@@ -30,8 +28,7 @@ class UserTableSeeder extends Seeder {
 				'lastname'	=> 'rafanan',
 				'username'	=> 'jrafanan',
 				'password'	=> Hash::make('iamdoge'),
-				'role'		=> 'agent',
-				'tripNum'   => NULL
+				'role'		=> 'agent'
 			]
 
 

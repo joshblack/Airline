@@ -329,13 +329,16 @@ class FlightController extends BaseController {
 		while (in_array($reservationNum, $reservationNums))
 			$reservationNum = rand(1, 999);
 
+		$id = Auth::user()->id;
+
 		$reservation = array(
 			'reservationNum'	=> $reservationNum,
 			'email'	=> $input['email'],
 			'name' => $input['fullName'],
 			'address' => $input['address'],
 			'phone'	=> $input['phoneNumber'],
-			'reservationDate' => $date
+			'reservationDate' => $date,
+			'id' => $id
 			);
 
 		DB::table('reservation')->insert($reservation);
@@ -459,13 +462,35 @@ class FlightController extends BaseController {
 	}
 
 	public function showFlights($id) {
-		$user = DB::table('users')
+		$reservations = DB::table('reservation')
 			->where('id', '=', $id)
-			->pluck('tripNum');
+			->lists('reservationNum');
 
-		$trips = DB::table('trip')
-			->where('tripNum', '=', $user)
-			->get();
+		$tripNums = array();
+
+		// getting all of our trip numbers
+		foreach ($reservations as $reservation) {
+			$tripNum = DB::table('payment')
+				->where('reservationNum', '=', $reservation)
+				->pluck('tripNum');
+
+			array_push($tripNums, $tripNum);
+		}
+
+		$trips = array();
+
+		// getting all of our associated trips
+		foreach ($tripNums as $trip) {
+			$oneTrip = DB::table('trip')
+				->where('tripNum', '=', $trip)
+				->get();
+
+			array_push($trips, $oneTrip);
+		}
+
+		return View::make('users.client.flights', array(
+			'trips' => $trips
+			));
 	}
 
 }
