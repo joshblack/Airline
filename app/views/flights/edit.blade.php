@@ -30,7 +30,7 @@
   <h4>Error</h4>
   {{ $message }}  
 @endif
-<a href="/flights/new"><h4>Create a New Trip</h4></a>
+<a href="/agents/flights/new"><h4>Create a New Trip</h4></a>
 <hr></hr>
 
 <form class="form-signin" action="/agents/flights/<?php echo $trip[0]->tripNum; ?>/edit" method="POST">

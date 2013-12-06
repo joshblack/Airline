@@ -59,7 +59,6 @@
       </tr>
     <?php endforeach; ?>
   <?php endif; ?>
-
 </table>
 
 @stop
