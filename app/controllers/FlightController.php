@@ -380,7 +380,6 @@ class FlightController extends BaseController {
 
 		$error = NULL;
 
-
 		foreach ($numSeats as $numSeat) {
 			if($numSeat->numSeatsAvail - 1 < 0)
 			{
