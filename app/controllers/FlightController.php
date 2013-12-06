@@ -385,19 +385,15 @@ class FlightController extends BaseController {
 			if($numSeat->numSeatsAvail - 1 < 0)
 			{
 				$error = 0;
-			}
-			else {
-				DB::table('flightleg')
-					->where('tripNum', $numSeat->tripNum)
-					->update(array('numSeatsAvail' => $numSeat->numSeatsAvail - 1));
+				break;
 			}
 		}
 		
 		if ($error == NULL) {
-			//$user = Auth::user()->id;
-			//DB::table('users')
-			//	->where('id', '=', $user)
-			//	->update(array('tripNum' => $input['tripNum']));
+
+			DB::table('flightleg')
+				->where('tripNum', $numSeat->tripNum)
+				->decrement('numSeatsAvail');
 
 			return Redirect::to('/')->with('success', 'Your flight has been booked!');
 		}
@@ -439,6 +435,7 @@ class FlightController extends BaseController {
 
 			if(!$arrCode)
 				return Redirect::to('agents/flights')->with('error', 'No flight available at that destination location');
+
 
 			$flightLeg = array(
 				'legNum' => $input['flightLeg' . $i],
