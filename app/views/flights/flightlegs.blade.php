@@ -4,7 +4,6 @@
 
 <div class="header">
   <ul class="nav nav-pills pull-right">
-    <li><a href="/">Home</a></li>
     <li><a href="/flights">Book a Flight</a></li>
     @if ( Auth::check() )
       @if ( Auth::user()->role == 'client')

@@ -48,6 +48,15 @@ class AgentController extends BaseController {
 	}
 
 	public function destroy($reservationId) {
+
+		$tripNum = DB::table('payment')
+			->where('reservationNum', '=', $reservationId)
+			->pluck('tripNum');
+
+		DB::table('flightleg')
+			->where('tripNum', $tripNum)
+			->increment('numSeatsAvail');
+
 		$reservation = DB::table('reservation')
 			->where('reservationNum', '=', $reservationId)
 			->delete();
