@@ -78,8 +78,8 @@
       <form class="form-signin" action="signup" method="POST">
         <h2 class="form-signin-heading">Enter Your Info.</h2>
         <input type="text" class="form-control" name="firstName" placeholder="First Name" required autofocus>
-        <input type="text" class="form-control" name="lastName" placeholder="Last Name" required autofocus>
-        <input type="text" class="form-control" name="username" placeholder="Username" required autofocus>
+        <input type="text" class="form-control" name="lastName" placeholder="Last Name" required>
+        <input type="text" class="form-control" name="username" placeholder="Username" required>
         <input type="password" class="form-control" name="password" placeholder="Password" required>
         <input type="hidden" name="role" value="client">
         <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up!</button>

@@ -78,7 +78,7 @@
       <form class="form-signin" action="payment" method="POST">
         <h3 class="form-signin-heading">Enter Your Payment Information</h3>
         <input type="text" class="form-control" name="account" placeholder="Account Number" required autofocus>
-        <input type="text" class="form-control" name="accountName" placeholder="Name on Account" required autofocus>
+        <input type="text" class="form-control" name="accountName" placeholder="Name on Account" required>
        	<input type="hidden" class="form-control" name="reservationNum" value="<?php echo $reservationNum; ?>">
         <input type="hidden" class="form-control" name="tripNum" value="<?php echo $tripNum; ?>">
         <button class="btn btn-lg btn-primary btn-block" type="submit">Make Payment</button>

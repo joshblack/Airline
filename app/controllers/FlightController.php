@@ -370,15 +370,13 @@ class FlightController extends BaseController {
 			'tripNum' => $input['tripNum']
 			);
 
-		DB::table('payment')->insert($payment);
-
 		// decreasing amount of seats on each leg
 
 		$numSeats = DB::table('flightleg')
 			->where('tripNum', '=', $input['tripNum'])
 			->get();
 
-		$error = NULL;
+		$error = 1;
 
 		foreach ($numSeats as $numSeat) {
 			if($numSeat->numSeatsAvail - 1 < 0)
@@ -387,17 +385,23 @@ class FlightController extends BaseController {
 				break;
 			}
 		}
-		
-		if ($error == NULL) {
 
+		if ($error == 1) {
 			DB::table('flightleg')
 				->where('tripNum', $numSeat->tripNum)
 				->decrement('numSeatsAvail');
+			DB::table('payment')->insert($payment);
 
 			return Redirect::to('/')->with('success', 'Your flight has been booked!');
 		}
 		else 
+		{
+			DB::table('reservation')
+				->where('reservationNum', '=', $input['reservationNum'])
+				->delete();
+
 			return Redirect::to('/')->with('error', 'Flight is full, sorry!');
+		}
 	}
 
 	public function storeFlightLegs() {
@@ -416,7 +420,13 @@ class FlightController extends BaseController {
 				->pluck('numOfSeats');
 
 			if(!$numSeats)
+			{
+				DB::table('trip')
+					->where('tripNum', '=', $input['tripNum'])
+					->delete();
+
 				return Redirect::to('agents/flights')->with('error', 'No airplane exists with that ID');
+			}
 
 			$departure = new Datetime($input['departure' . $i .'-date']);
 			$destination = new Datetime($input['destination' . $i . '-date']);
